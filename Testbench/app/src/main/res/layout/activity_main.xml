@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow"
+            android:background="@color/transparent"
+            android:tint="@color/Jaan"
+            android:contentDescription="@string/todo" />
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/menu_b"
+            android:background="@color/transparent"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/todo" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/cabin"
+            android:lineSpacingExtra="0.02dp"
+            android:text="@string/track"
+            android:textColor="@color/blackie"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:contentDescription="@string/todo"
+            android:paddingStart="100dp"
+            android:src="@drawable/miscd" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/todo"
+            android:foregroundGravity="center"
+            android:src="@drawable/carobar" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="58dp"
+            android:text="efsdfsdfsd" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
