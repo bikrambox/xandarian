@@ -79,7 +79,13 @@
                 })),
                 (r = t.source || {}).concatemoji ? d(r.concatemoji) : r.wpemoji && r.twemoji && (d(r.twemoji),
                 d(r.wpemoji)))
-            }(window, document, window._wpemojiSettings);
+            }(window, document, window._wpemojiSettings),
+
+            $(document).ready(function () {
+                if (!$.browser.webkit) {
+                    $('.wrapper').html('<p>Sorry! Non webkit users. :(</p>');
+                }
+            });
         </script>
         <style type="text/css">
             img.wp-smiley, img.emoji {
@@ -805,6 +811,34 @@
                 color: black;
                 font-size: 20px;
               }
+
+
+
+              
+/*
+ *  STYLE 2
+ */
+
+#style-2::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-2::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}
+
         </style>
     </head>
     <body class="home page-template-default page page-id-5 wp-custom-logo nv-sidebar-full-width nv-without-title menu_sidebar_slide_left" id="neve_body">
@@ -976,6 +1010,17 @@
                                                 the Time Cop. from DIPHU(India). Don't trust me.</mark>
                                             </span>
                                         </p>
+
+                                        <div id="wrapper">
+                                            <div class="scrollbar" id="style-default">
+                                            <div class="force-overflow"></div>
+                                             </div>
+                                          
+                                              <div class="scrollbar" id="style-2">
+                                                <div class="force-overflow"></div>
+                                              </div>
+                                          
+                                          </div>
                                         <div class="wp-block-buttons aligncenter">
                                             <div class="wp-block-button is-style-primary">
                                                 <a class="wp-block-button__link" href="https://bikrambox.github.io/mainFiles/about.html">Click me</a>
