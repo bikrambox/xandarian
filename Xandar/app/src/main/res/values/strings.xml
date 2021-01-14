@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Xandar</string>
+    <string name="button">Button</string>
+    <string name="textview">Welcome Everyone</string>
+    <string name="track">Track your package anytime and anywhere or just let us notify!</string>
+    <string name="sometext">someText</string>
+    <string name="tracking_status">Tracking status</string>
+    <string name="enter_consignment_id">Enter consignment ID</string>
+    <string name="turn_on_notifications_for_this_order">Turn on notifications for this order</string>
+    <string name="todo">TODO</string>
+
+    <string name="Label_under">*Tracking status may take up-to 4 hours to update.</string>
+
+
+</resources>
