@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:id="@+id/header1"
+
+    android:gravity="bottom"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/dataemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textSize="15dp"/>
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="x TRAVELING"
+        android:textColor="#000000"
+        android:textSize="24sp"/>
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make your Journey safe with us"
+        android:textColor="#0A0A0A"
+
+         />
+
+</LinearLayout>
