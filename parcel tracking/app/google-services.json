@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "945318084358",
+    "project_id": "parceltracking-60562",
+    "storage_bucket": "parceltracking-60562.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945318084358:android:7b8f0fc73863b2b751e887",
+        "android_client_info": {
+          "package_name": "com.xclusive.ParcelTracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945318084358-omfm5esiuq6p26c0dv8ho0o4qamhcmb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvSkXWbMtWBQfGM3i5L2tdCVHSbzruLh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945318084358-omfm5esiuq6p26c0dv8ho0o4qamhcmb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
