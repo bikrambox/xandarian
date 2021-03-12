@@ -7,29 +7,18 @@
     tools:context=".Saved_orders">
 
 
-    <ImageButton
-        android:id="@+id/backbtn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/transparent"
-        android:src="@drawable/backbtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:animateLayoutChanges="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:expandedTitleGravity="bottom"
-        app:layout_constraintBottom_toBottomOf="@+id/backbtn1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/backbtn1"
-        app:layout_constraintTop_toTopOf="@+id/backbtn1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingClass">
 
         <androidx.appcompat.widget.Toolbar
@@ -38,9 +27,10 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             app:layout_collapseMode="pin"
+
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="Search History"
+            app:title="@string/sh"
             app:titleTextColor="@color/colorPrimary">
             <!-- app:layout_scrollFlags="scroll|enterAlways|snap"-->
 
@@ -53,6 +43,7 @@
         android:id="@+id/recyclerview_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#F1F1F1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -61,4 +52,19 @@
         app:layout_constraintVertical_bias="1.0">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backbtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/backbtn"
+        android:tint="@color/white"
+        android:background="@color/white"
+        app:rippleColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_history"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

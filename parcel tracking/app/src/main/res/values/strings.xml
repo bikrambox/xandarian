@@ -9,10 +9,44 @@
     <string name="enter_consignment_id">Enter consignment ID</string>
     <string name="turn_on_notifications_for_this_order">Turn on notifications for this order</string>
     <string name="todo">TODO</string>
-
     <string name="Label_under">Tracking status may take up-to 4 hours to update.</string>
+
+    <string name="status">Delivery Status</string>
+    <string name="shipc">Shipment\nCreated</string>
+    <string name="packageup">Package\nPick Up</string>
+    <string name="packager">Package\nReached Hub</string>
+    <string name="transit">Package\nIn-Transit</string>
+    <string name="Delivered">Package\nDelivered</string>
+    <string name="Delivered1">Package Delivered</string>
+    <string name="Days">Days</string>
+    <string name="EstimatedDate">Estimated Date</string>
+    <string name="trackanother">Track Another</string>
+
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="saved">Saved Orders</string>
+    <string name="logout">Logout</string>
+    <string name="tracknow">Track Now</string>
+    <string name="done">Done</string>
+    <string name="est">Estimated Delivery</string>
+    <string name="trackorder">Track Order</string>
+    <string name="Back">Back</string>
+    <string name="save">Save</string>
+    <string name="currentl">Current Location</string>
+    <string name="dst">Destinatio</string>
+    <string name="src">Source</string>
+    <string name="sh">      Search History</string>
+    <string name="delete">Delete</string>
+    <string name="deleteinfo">Are you sure want to delete this file?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel1">Cancel</string>
+
+
+
 
 
     <string name="draweropen">draweropen</string>
     <string name="drawerclose">drawerclose</string>
+    <string name="key1">AIzaSyAs-Xf-4dHlIgKjg_w4PoGJ2SyIxMwdFwg</string>
+    <string name="key">AIzaSyAdYl5sPMCD1GC_A4yZsogPLoQo2lv9jSQ</string>
 </resources>

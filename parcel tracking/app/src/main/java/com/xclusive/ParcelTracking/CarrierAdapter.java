@@ -1,5 +1,5 @@
 package com.xclusive.ParcelTracking;
-import static com.xclusive.ParcelTracking.Product_tracking.Code;
+import static com.xclusive.ParcelTracking.Product_tracking.Code1;
 
 import static com.xclusive.ParcelTracking.Product_tracking.courierdialog;
 import static com.xclusive.ParcelTracking.Product_tracking.courierimage;
@@ -51,7 +51,7 @@ List<CarrierListModel> carrierListModels ;
                  courierdialog.dismiss();
 
 
-                Code = carrierListModels.get(position).getCode();
+                Code1 = carrierListModels.get(position).getCode();
                 valid = 1;
                 Glide.with(holder.itemView.getContext()).load("http:"+carrierListModels.get(position).getPicture()).placeholder(R.drawable.imageloading).into(courierimage);
                 icon_url = "http:"+carrierListModels.get(position).getPicture();

@@ -17,7 +17,6 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.EventLogTags;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +46,7 @@ import okhttp3.Response;
 
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -64,7 +64,7 @@ public class Product_tracking extends AppCompatActivity implements SearchView.On
     public static TextView output;
     private ImageButton qropenbtn,send,donebtn,micbtn;
     public static Dialog courierdialog;
-    public static String Code ="";
+    public static String Code1 ="";
     public static int valid = 0;
     public static String tracking_number,carrier_code,status,itemTimeLength,ItemReceived,
                          DestinationArrived,lastEvent,icon_url;
@@ -95,7 +95,17 @@ public class Product_tracking extends AppCompatActivity implements SearchView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_tracking);
+
+
         init();
+        input.setText(getIntent().getStringExtra("ID"));
+        Code1 = getIntent().getStringExtra("CID");
+        Glide.with(this).load(getIntent().getStringExtra("URL")).placeholder(R.drawable.imageloading).into(courierimage);
+        if (Code1.length()!=0){
+            valid = 1;
+//            Toast.makeText(getApplicationContext(), carrier_code, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),getIntent().getStringExtra("ID"), Toast.LENGTH_SHORT).show();
+        }
         send.setOnClickListener(V->{
             if (input.getText().toString().isEmpty() | valid==0){
                 Toast.makeText(Product_tracking.this, "please select a courier and enter a valid tracking ID", Toast.LENGTH_SHORT).show();
@@ -105,7 +115,7 @@ public class Product_tracking extends AppCompatActivity implements SearchView.On
 
             String in = input.getText().toString();
             tracking_number = in;
-            RequestBody body = RequestBody.create(mediaType,"{\"tracking_number\":\""+in+"\",\"carrier_code\": \""+Code+"\"}");
+            RequestBody body = RequestBody.create(mediaType,"{\"tracking_number\":\""+in+"\",\"carrier_code\": \""+ Code1 +"\"}");
 
             Request request = new Request.Builder()
                     .url("https://order-tracking.p.rapidapi.com/trackings/realtime")
@@ -182,14 +192,15 @@ public class Product_tracking extends AppCompatActivity implements SearchView.On
                             e.printStackTrace();
 
                         }
-                        Intent intent = new Intent(Product_tracking.this, Tracking_Details.class);
-                        startActivity(intent);
+                     details();
                     }
                 });
             }
 
-            
-        });
+
+
+
+            });
             }
         });
         qropenbtn.setOnClickListener(V->{
@@ -291,7 +302,25 @@ public class Product_tracking extends AppCompatActivity implements SearchView.On
         /*-----------------------------------------------------------------------*/
 
     }
+    private void details() {
+        Intent intent = new Intent(Product_tracking.this, Tracking_Details.class);
+        intent.putStringArrayListExtra("description",description);
+        intent.putStringArrayListExtra("locationtransit",locationtransit);
+        intent.putStringArrayListExtra("checkpoint_status",checkpoint_status);
+        intent.putStringArrayListExtra("dates",dates);
 
+
+
+        intent.putExtra("tracking_number", tracking_number);
+        intent.putExtra("carrier_code", carrier_code);
+        intent.putExtra("status",status);
+        intent.putExtra("itemTimeLength",itemTimeLength);
+        intent.putExtra("ItemReceived",ItemReceived);
+        intent.putExtra(" DestinationArrived",  DestinationArrived);
+        intent.putExtra("lastEvent", lastEvent);
+        intent.putExtra("icon_url",icon_url);
+        startActivity(intent);
+    }
     public void init(){
 
         drawerLayout =findViewById(R.id.drawer_layout1);

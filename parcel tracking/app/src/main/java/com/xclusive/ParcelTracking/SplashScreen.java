@@ -107,7 +107,10 @@ else{
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent main1 = new Intent(SplashScreen.this, Product_tracking.class);
+                    Intent main1 = new Intent(SplashScreen.this,Product_tracking.class);
+                    main1.putExtra("ID","");
+                    main1.putExtra("CID","");
+                    main1.putExtra("URL","");
                     startActivity(main1);
                     //customType(SplashScreen.this,"bottom-to-up");
                     finish();
@@ -119,6 +122,7 @@ else{
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    //Intent main1 = new Intent(SplashScreen.this, Tracking_Details.class);
                     Intent main1 = new Intent(SplashScreen.this, welcome.class);
                     startActivity(main1);
                     //customType(SplashScreen.this,"bottom-to-up");

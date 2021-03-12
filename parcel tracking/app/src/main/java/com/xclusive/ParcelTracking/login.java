@@ -54,7 +54,12 @@ private FirebaseAuth user;
                     public void onComplete(@NonNull Task<AuthResult> task) {
                          if (task.isSuccessful()){
                              progressBar1.setVisibility(View.GONE);
-                                         startActivity(new Intent(getApplicationContext(), Product_tracking.class));
+                             Intent  main1= new Intent(getApplicationContext(), Product_tracking.class);
+
+                             main1.putExtra("ID","");
+                             main1.putExtra("CID","");
+                             main1.putExtra("URL","");
+                             startActivity(main1);
                                          finish();
                          }
                          else {

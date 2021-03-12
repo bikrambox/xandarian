@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.secrets_gradle_plugin' version '0.5'
 
 }
 
@@ -38,6 +39,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-auth:20.0.2'
     implementation 'com.google.firebase:firebase-firestore:22.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
     testImplementation 'junit:junit:4.+'
@@ -56,8 +58,15 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.2'
 
     implementation 'com.budiyev.android:code-scanner:2.1.0'
-    implementation 'com.shuhart.stepview:stepview:1.5.1'
+//    implementation 'com.shuhart.stepview:stepview:1.5.1'
 
     implementation 'com.android.support:design:26.1.0'
+
+
+
+
+   //new library
+    implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
+
 
 }

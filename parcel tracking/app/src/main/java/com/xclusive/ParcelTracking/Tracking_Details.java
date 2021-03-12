@@ -1,143 +1,233 @@
 package com.xclusive.ParcelTracking;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.shuhart.stepview.StepView;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.kofigyan.stateprogressbar.StateProgressBar;
+//import com.shuhart.stepview.StepView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tracking_Details extends AppCompatActivity {
-    private ImageButton backbtn,anotherbtn;
-    private TextView sc, pp,prh,pt,pd;
+public class Tracking_Details extends AppCompatActivity  implements OnMapReadyCallback {
+
+    private TextView track1,trackid,textView5,textView4,sc, pp,prh,pt,pd;
     private TextView scn, ppn,prhn,ptn,pdn;
     private TextView scd, ppd,prhd,ptd,pdd,  date1,date2;
+    private StateProgressBar stateprogressbar;
+    private Button backbtn,savebtn;
+    ImageView carrier;
+    GoogleMap map;
+    private RecyclerView recyclerviewstatus;
+    private ArrayList<statusModel> statuslist = new ArrayList<statusModel>();
+    private statusAdapter statusAdapter;
 
-    StepView step_view;
 
-//    private BottomSheetBehavior bottomSheetBehavior;
-//    private FrameLayout frameLayout;
+    public static String tracking_number1,carrier_code1,status1,itemTimeLength1,ItemReceived1,
+            DestinationArrived1,lastEvent1,icon_url1;
 
+    public static ArrayList<String >description1 = new ArrayList<>();
+    public static ArrayList<String >locationtransit1 = new ArrayList<>();
+    public static ArrayList<String >checkpoint_status1= new ArrayList<>();
+    public static ArrayList<String >dates1= new ArrayList<>();
 
+    //todo sqllite//////////////////////////////////////////////////////////////////
+    sqlDB dataBaseLite;
+    ////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tracking__details);
-//        frameLayout = findViewById(R.id.container_bottom_sheet);
-//        bottomSheetBehavior = BottomSheetBehavior.from(frameLayout);
-//        bottomSheetBehavior.setPeekHeight(200);
-//        //now you can set the states:
-//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
+        dataBaseLite = new sqlDB(this);
         init();
-        step_view = findViewById(R.id.step_view);
 
-        step_view.getState()
-                .selectedTextColor(ContextCompat.getColor(this, R.color.white))
-                .animationType(StepView.ANIMATION_CIRCLE)
-                .selectedCircleColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .selectedCircleRadius(getResources().getDimensionPixelSize(R.dimen.dp14))
-                .selectedStepNumberColor(ContextCompat.getColor(this, R.color.white))
-                // You should specify only stepsNumber or steps array of strings.
-                // In case you specify both steps array is chosen.
-                .steps(new ArrayList<String>() {{
-                    add("Shipment Created");
-                    add("Package Picked up");
-                    add("Package Reached HUB");
-                    add("Package In Transit");
-                    add("Package Delivered");
-                }})
-                // You should specify only steps number or steps array of strings.
-                // In case you specify both steps array is chosen.
-                .stepsNumber(5)
-                .animationDuration(getResources().getInteger(android.R.integer.config_shortAnimTime))
-                .stepLineWidth(getResources().getDimensionPixelSize(R.dimen.dp1))
-                .textSize(getResources().getDimensionPixelSize(R.dimen.sp14))
-                .stepNumberTextSize(getResources().getDimensionPixelSize(R.dimen.sp16))
-                .typeface(ResourcesCompat.getFont(getApplicationContext(), R.font.roboto))
-                // other state methods are equal to the corresponding xml attributes
-                .commit();
+        description1 = getIntent().getStringArrayListExtra("description");
+        locationtransit1 = getIntent().getStringArrayListExtra("locationtransit");
+        checkpoint_status1 = getIntent().getStringArrayListExtra("checkpoint_status");
+        dates1 = getIntent().getStringArrayListExtra("dates");
+        tracking_number1 = getIntent().getStringExtra("tracking_number");
+        carrier_code1 = getIntent().getStringExtra("carrier_code");
+        status1 = getIntent().getStringExtra("status");
+        itemTimeLength1 = getIntent().getStringExtra("itemTimeLength");
+        ItemReceived1 = getIntent().getStringExtra("ItemReceived");
+        DestinationArrived1 = getIntent().getStringExtra("DestinationArrived");
+        lastEvent1 = getIntent().getStringExtra("lastEvent");
+        icon_url1 = getIntent().getStringExtra("icon_url");
 
 
-        step_view.go(0, true);
-        step_view.done(true);
-        //step_view.done(false);
-        step_view.setOnStepClickListener(new StepView.OnStepClickListener() {
-            @Override
-            public void onStepClick(int step) {
-                // 0 is the first step
-            }
+        MapFragment fragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map1);
+        fragment.getMapAsync(this);
+
+        Glide.with(this).load(icon_url1).placeholder(R.drawable.location_icon).into(carrier);
+        trackid.setText(tracking_number1);
+        track1.setText(locationtransit1.get(0));
+        if (!lastEvent1.contains("Delivered")){
+
+            String d =dates1.get(1);
+            String dd = d.replaceAll("[-:]","");
+
+            String ddd = dd.substring(0,6);
+            int up = Integer.valueOf(dd.substring(6,8));
+
+            textView5.setText(ddd+String.valueOf(up+5)+"days");
+        }
+        else{
+            textView4.setText(R.string.Delivered1);
+            textView5.setText(dates1.get(1));
+        }
+
+
+
+
+// todo: state progressbar//
+
+        statepro();
+        recyclerview();
+
+// todo: save order details in SQL Lite//
+        savebtn.setOnClickListener(V->{
+            savedorders();
         });
 
 
-
-//        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-//            @Override
-//            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-//                switch (newState) {
-//                    case BottomSheetBehavior.STATE_DRAGGING:
-//                    case BottomSheetBehavior.STATE_EXPANDED:
-//                        break;
-//                    case BottomSheetBehavior.STATE_COLLAPSED:
-//                    default:
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//
-//            }
-//        });
  }
 
+
+
+
+    private void recyclerview() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerviewstatus.setLayoutManager(linearLayoutManager);
+        for (int i=0;i< description1.size();i++){
+            statuslist.add(new statusModel(description1.get(i),dates1.get(i)));
+        }
+
+
+        statusAdapter= new statusAdapter(statuslist);
+        recyclerviewstatus.setAdapter(statusAdapter);
+        statusAdapter.notifyDataSetChanged();
+
+
+    }
+
+    private void statepro() {
+        String[] descriptionData = {
+                getResources().getString(R.string.shipc),
+                getResources().getString(R.string.packageup),
+                getResources().getString(R.string.transit),
+                getResources().getString(R.string.Delivered)
+        };
+        stateprogressbar.setStateDescriptionData(descriptionData);
+        //stateprogressbar.setStateDescriptionTypeface(String.valueOf(R.font.roboto_light));
+        stateprogressbar.enableAnimationToCurrentState(true);
+        stateprogressbar.setStateSize(30f);
+        stateprogressbar.setStateNumberTextSize(15f);
+        stateprogressbar.setStateLineThickness(5f);
+        stateprogressbar.setStateDescriptionSize(12f);
+        stateprogressbar.setMaxDescriptionLine(5);
+        stateprogressbar.setJustifyMultilineDescription(true);
+        stateprogressbar.setDescriptionLinesSpacing(5f);
+        //app:spb_currentStateNumber="two"
+
+
+        if (status1.contains("transit")){
+            stateprogressbar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+        }
+        if(status1.contains("pickup")){
+            stateprogressbar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+        }
+       if (lastEvent1.contains("Delivered")){
+           stateprogressbar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
+        }
+       else {
+           stateprogressbar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+       }
+
+
+
+
+
+    }
     private void init() {
         backbtn = findViewById(R.id.backbtn);
-        anotherbtn = findViewById(R.id.track_anotherbtn);
+        savebtn = findViewById(R.id.savebtn);
+        carrier =findViewById(R.id.carrierimage);
+        trackid =findViewById(R.id.trackid);
+        track1 =findViewById(R.id.track1);
+        textView5 =findViewById(R.id.textView5);
+        textView4 =findViewById(R.id.textView4);
+        recyclerviewstatus =findViewById(R.id.recyclerviewstatus);
 
-        sc = findViewById(R.id.ship_date);    //todo:
-        pp = findViewById(R.id.package_date);
-        prh= findViewById(R.id.package_reach_hub);
-        pt = findViewById(R.id.transit_date);
-        pd = findViewById(R.id.delivery_date);
 
-        scn = findViewById(R.id.pack_loc);    //todo:
-        ppn = findViewById(R.id.pack_p_loc);
-        prhn= findViewById(R.id.pr_loc);
-        ptn = findViewById(R.id.pt_loc);
-        pdn = findViewById(R.id.pd_loc);
 
-        scd = findViewById(R.id.e_time);      //todo:
-        ppd = findViewById(R.id.pp_time);
-        prhd = findViewById(R.id.pr_time);
-        ptd = findViewById(R.id.pt_time);
-        pdd = findViewById(R.id.pd_time);
-
-        date1 = findViewById(R.id.date1);     //todo:
-        date2 = findViewById(R.id.date2);
+        stateprogressbar = findViewById(R.id.stateprogressbar);
 
         backbtn.setOnClickListener(V->{
             onBackPressed();
             finish();
         });
-        anotherbtn.setOnClickListener(v->{
-            Intent in = new Intent(getApplicationContext(),Product_tracking.class);
-            startActivity(in);
-            finish();
-        });
+
+    }
+    private void savedorders() {
+        int res = dataBaseLite.insertdata(tracking_number1,carrier_code1,icon_url1);
+        if (res==1){
+            Toast.makeText(Tracking_Details.this, "Saved", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        String loc = locationtransit1.get(0);
+        List<Address> addresses = null;
+        MarkerOptions options = new MarkerOptions();
+
+        if (loc != null) {
+            Geocoder geocoder = new Geocoder(Tracking_Details.this);
+            try {
+                addresses = geocoder.getFromLocationName(loc, 1);
+                Log.e("----------->asd", addresses.get(0).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Address address = addresses.get(0);
+
+            map = googleMap;
+            LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("sydney"));
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            //googleMap.animateCamera(CameraUpdateFactory.zoomBy(1));
+            googleMap.addCircle(new CircleOptions().center(latLng));
+
+
+        }
+
+
     }
 }
